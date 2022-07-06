@@ -13,7 +13,7 @@ import PIL.Image
 import json
 import torch
 import dnnlib
-
+import mmcv
 try:
     import pyspng
 except ImportError:
@@ -209,11 +209,12 @@ class ImageFolderDataset(Dataset):
 
     def _load_raw_image(self, raw_idx):
         fname = self._image_fnames[raw_idx]
-        with self._open_file(fname) as f:
-            if pyspng is not None and self._file_ext(fname) == '.png':
-                image = pyspng.load(f.read())
-            else:
-                image = np.array(PIL.Image.open(f))
+        # with self._open_file(fname) as f:
+        # if pyspng is not None and self._file_ext(fname) == '.png':
+        #     image = pyspng.load(f.read())
+        # else:
+        #     image = np.array(PIL.Image.open(f))
+        image = mmcv.imread(os.path.join(self._path, fname), channel_order='rgb')
         if image.ndim == 2:
             image = image[:, :, np.newaxis] # HW => HWC
         image = image.transpose(2, 0, 1) # HWC => CHW

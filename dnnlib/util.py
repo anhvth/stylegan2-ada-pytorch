@@ -379,7 +379,8 @@ def is_url(obj: Any, allow_file_urls: bool = False) -> bool:
     return True
 
 
-def open_url(url: str, cache_dir: str = None, num_attempts: int = 10, verbose: bool = True, return_filename: bool = False, cache: bool = True) -> Any:
+def open_url(url: str, cache_dir: str = None, num_attempts: int = 10, verbose: bool = True, 
+            return_filename: bool = False, cache: bool = True) -> Any:
     """Download the given URL and return a binary-mode file object to access the data."""
     assert num_attempts >= 1
     assert not (return_filename and (not cache))
